@@ -147,9 +147,17 @@ function pushbutton2_Callback(hObject, eventdata, handles)
 
 global figure_initial
 
-str1 = 'jpg';
-str2 = 'eps';
-new_filename = strrep(figure_initial,str1,str2);
+[~,dim] = size(figure_initial);
+
+for i = 1:1:dim
+    if figure_initial(1,i) ~= '.'
+        str1(1,i) = figure_initial(1,i);
+    else
+        break
+    end
+end
+str2 = '.eps';
+new_filename = [str1,str2];
 picture = getframe(handles.axes1);
 figure();
 image(picture.cdata);
