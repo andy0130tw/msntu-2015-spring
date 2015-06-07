@@ -12,8 +12,11 @@ function [  ] = plotfittingBYInterpolation( S )
        end 
        X(i) = G(1,1);
        Y(i) = G(2,1);
-   end    
-   plot(Y,X,'color','red');
+   end
+   
+   global axesctrl
+   plot(axesctrl, Y,X,'color','red');
+   drawnow;
 %   X=S(1,:)*parameter(n);
 %   Y=S(2,:)*parameter(n);
 end
