@@ -22,13 +22,9 @@ function varargout = GUI(varargin)
 
 % Edit the above text to modify the response to help GUI
 
-% Last Modified by GUIDE v2.5 07-Jun-2015 14:59:30
+% Last Modified by GUIDE v2.5 07-Jun-2015 17:49:32
 
 % Begin initialization code - DO NOT EDIT
-
-global figure_initial
-global figure_final
-global X Y
 
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
@@ -65,6 +61,11 @@ guidata(hObject, handles);
 % We love deep recursion
 set(0, 'RecursionLimit', 2000);
 
+% cache handles
+global axesctrl thumbctrl
+axesctrl = findobj('tag', 'axes1');
+thumbctrl = findobj('tag', 'axes3');
+
 
 % UIWAIT makes GUI wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
@@ -92,14 +93,13 @@ cla;
 [A, ori] = readfile(figure_initial);
 % A = read_colorfile(figure_initial);
 
-global axesctrl
-axesctrl = findobj('tag', 'axes1');
-
-set(axesctrl, 'xtickmode', 'auto', 'ytickmode', 'auto');
-
-image(ori);
-
 [h, w] = size(A);
+
+global axesctrl thumbctrl
+
+axes(thumbctrl);
+image(ori);
+axis equal, axis off;
 
 % hold on;
 % axis equal;
@@ -111,6 +111,13 @@ image(ori);
 axes(axesctrl);
 hold on;
 axis equal, axis([0 w 0 h]);
+set(axesctrl, 'xtickmode', 'auto', 'ytickmode', 'auto');
+
+global overlay;
+overlay = image([0 w], [h 0], ori, 'alphadata', ones(h, w) * .1);
+
+% update view
+drawnow;
 
 global timer
 timer = now;
@@ -144,7 +151,8 @@ function pushbutton2_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-global figure_initial
+global figure_initial axesctrl overlay;
+
 
 [~,dim] = size(figure_initial);
 
@@ -157,11 +165,28 @@ for i = 1:1:dim
 end
 str2 = '.eps';
 new_filename = [str1,str2];
-picture = getframe(handles.axes1);
+
+% hide overlay
+set(overlay, 'visible', 'off');
+
+set(axesctrl, 'xtick', [], 'ytick', [], 'xcolor', [1 1 1], 'ycolor', [1 1 1]);
+
+picture = getframe(axesctrl);
 figure();
-image(picture.cdata);
-saveas(gcf,new_filename, 'eps2c');
-close(gcf);
+
+cdd = picture.cdata;
+[h, w] = size(cdd);
+
+image([0 w], [0 h], cdd);
+axis([0 w 0 h]);
+
+saveas(gcf, new_filename, 'eps2c');
+
+% show overlay
+set(overlay, 'visible', 'on');
+set(axesctrl, 'xtickmode', 'auto', 'ytickmode', 'auto');
+
+% close(gcf);
 
 
 % --- Executes during object creation, after setting all properties.
@@ -194,3 +219,13 @@ function listbox1_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+
+
+% --- Executes during object creation, after setting all properties.
+function axes3_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to axes3 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: place code in OpeningFcn to populate axes3
+set(gca, 'xtick', [], 'ytick', []);
