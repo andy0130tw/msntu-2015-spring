@@ -12,34 +12,25 @@ function [ output_args ] = dealing( A )
 %                       successive non-zero entry 
 %   judge_num   local   0 implies that column all zeros 
 %                       1 implies that column has non-zero entry
-%   ms          local   # S's row
-%   ns          local   # S's column
 %   run         local   initial # assemble iteratedly
 %   dir         local   0 implies no need direction
 %                       1 implies direction is up
 %                       2 implies direction is down
-%   G1          local   the group is successive 1 start with start position and 
-%                       only direction up 
-%   G2          local   the group is successive 1 start with end position and
-%                       only direction down
 %   X           local   the figure's x-coordinate
 %   Y           local   the figure's y-coordinate
 %   coeff       local   the function's coefficient
-
+    
+    set(0,'RecursionLimit',2000)
+    
     [ ma , na ] =size( A );
     flag = 1 ;
+    idx = 1;
+    I = [0];
+    Dots = zeros(2,1);
     
     tic;
-    
-    global timer
-    textctrl = findobj('tag', 'text4');
-    
     % when A become a zero matrix , program finished
     while norm(A) > 0
-        
-        set(textctrl, 'string', round((now - timer) * 24 * 60 * 60 * 1000) / 1000);
-        drawnow;
-        
         rA = A;
         % start to search non-zero column from flag column
         for i = flag : na ;
@@ -49,37 +40,15 @@ function [ output_args ] = dealing( A )
                 break ;
             end
         end
-        
-        [ ms , ns ] = size(S);
-        
-        if norm(S) ~= 0
-            disp(S)
-        end
+
         % start to group
         [ A , G1 , G2 ] = dealing_group( A , rA , S );
-
-        disp(A)
-        
+      
         hold on;
         axis equal;
-
+        
         % plot G1's and G2's figure
-        if ns == 1
-            if rA( S(1,1) , S(2,1) ) ~= 0.25
-                plotfittingBYInterpolation(G1);
-            end
-
-            if rA( S(1,1) , S(2,1) ) ~= 0.75
-                plotfittingBYInterpolation(G2);
-            end
-        else
-            plotfittingBYInterpolation(G1);
-            plotfittingBYInterpolation(G2);      
-        end
-        
-    disp(G1)
-    disp(G2)    
-        
+        [ I , idx , Dots ] = dealing_plot( rA , S , G1 , G2 , I , idx , Dots );
     end
     toc;
 end

@@ -5,7 +5,7 @@ function [ A ] = reset_value( A , dir , j , i , edge )
     judge_leftnum = judge_left( A , i , j , edge );
     
     switch dir
-        case 0
+        case -1
                
         case 1
             if j+1 <= ma & j ~= 1 & i+1 <= na
