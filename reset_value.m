@@ -146,17 +146,7 @@ function [ A ] = reset_value( A , dir , j , i , edge )
                         A ( j , i ) = 0;
                     else
                         A ( j , i ) = 1;
-                    end
-                    
-                elseif A ( j-1 , i+1 ) == 0
-%                     A ( j , i ) = 0;
-                    
-                    if judge_leftnum == 0
-                        A ( j , i ) = 0;
-                    else
-                        A ( j , i ) = 1;
-                    end
-                    
+                    end                    
                 else
                     A ( j , i ) = 0.75;
                 end
@@ -170,16 +160,16 @@ function [ A ] = reset_value( A , dir , j , i , edge )
                 end
                 
             elseif j == ma & i+1 <= na
-                if A( j , i+1 ) ~= 0 & A( j+1 , i ) ~= 0
+                if A( j , i+1 ) ~= 0 
                     A ( j , i ) = 0.75;
-                elseif A( j , i+1 ) ~= 0 & A( j+1 , i ) == 0
+%                 elseif A( j , i+1 ) ~= 0 
 %                     A ( j , i ) = 0;
                     
-                    if judge_leftnum == 0
-                        A ( j , i ) = 0;
-                    else
-                        A ( j , i ) = 1;
-                    end
+%                     if judge_leftnum == 0
+%                         A ( j , i ) = 0;
+%                     else
+%                         A ( j , i ) = 1;
+%                     end
                     
                 else
 %                     A ( j , i ) = 0;

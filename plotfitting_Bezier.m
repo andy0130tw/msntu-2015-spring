@@ -14,6 +14,5 @@ function [  ] = plotfitting_Bezier( G )
        Y(i) = S(2,1);
    end    
    plot( Y , X ,'color','red');
+   drawnow;
 end
-
-

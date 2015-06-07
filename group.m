@@ -52,7 +52,7 @@ function [ A , G ] = group( A , S , G , run , dir)
             G = [ G , M ] ;
             run = run + 1 ;
             [ A , G ] = group ( A , M , G , run , dir);
-        else
+        elseif G(1,ng) + 1 <= ma
             if A(G(1,ng) + 1 , G(2,ng)) ~= 0 |  A(G(1,ng) + 1 , G(2,ng) + 1) ~= 0 
                 if A(G(1,ng) + 1 , G(2,ng)) ~= 0
                     [ A , M , x ] = judge_col( A , G(2,ng) , [ G(1,ng) + 1 ; G(2,ng) ] , 2) ;
@@ -76,7 +76,7 @@ function [ A , G ] = group( A , S , G , run , dir)
             G = [ G , M ] ;
             run = run + 1 ;
             [ A , G ] = group ( A , M , G , run , dir);
-        else
+        elseif G(1,ng) - 1 >= 1 
             if A(G(1,ng) - 1 , G(2,ng)) ~= 0 |  A(G(1,ng) - 1 , G(2,ng) + 1) ~= 0 
                 if A(G(1,ng) - 1 , G(2,ng)) ~= 0
                     [ A , M , x ] = judge_col( A , G(2,ng) , [ G(1,ng) - 1 ; G(2,ng) ] , 1) ;
