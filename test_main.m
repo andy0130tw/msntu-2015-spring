@@ -15,4 +15,3 @@ function [ output_args ] = test_main( A )
         end
     end
 end
-
