@@ -186,7 +186,7 @@ saveas(gcf, new_filename, 'eps2c');
 set(overlay, 'visible', 'on');
 set(axesctrl, 'xtickmode', 'auto', 'ytickmode', 'auto');
 
-% close(gcf);
+close(gcf);
 
 
 % --- Executes during object creation, after setting all properties.
