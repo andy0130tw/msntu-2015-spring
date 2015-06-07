@@ -2,6 +2,9 @@ function [  ] = plotfittingBYInterpolation( S )
 %   PLOTFITTINGBYINTERPOLATION Summary of this function goes here
 %   Detailed explanation goes here
    [~,n] = size(S);
+   if n <= 2
+       return;
+   end
    t = linspace(0,1 ,100);
    for i = 1:100
        G=S;
@@ -16,9 +19,15 @@ function [  ] = plotfittingBYInterpolation( S )
    
    global axesctrl
    plot(axesctrl, Y,X,'color','red');
+
+%    parameter generation
+%    Xi = S(1, :) * parameter(n);
+%    Yi = S(2, :) * parameter(n);
+%   
+%    listctrl = findobj('tag', 'listbox1');
+%    set(listctrl, 'string', [get(listctrl, 'string'); ['X: ', char(Xi)]; ['Y: ', char(Yi)]; '------']);
+   
    drawnow;
-%   X=S(1,:)*parameter(n);
-%   Y=S(2,:)*parameter(n);
 end
 
 
