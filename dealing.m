@@ -25,6 +25,7 @@ function [ output_args ] = dealing( A )
     [ ma , na ] =size( A );
     flag = 1 ;
     idx = 1;
+    num = 1;
     I = [0];
     Dots = zeros(2,1);
     
@@ -56,7 +57,17 @@ function [ output_args ] = dealing( A )
         axis equal;
         
         % plot G1's and G2's figure
-        [ I , idx , Dots ] = dealing_plot( rA , S , G1 , G2 , I , idx , Dots );
+        [ I , idx , Dots , num ] = dealing_plot( rA , S , G1 , G2 , I , idx , Dots , num );
+        
+%         listctrl = findobj('tag', 'listbox1');
+%         set(listctrl, 'string', [
+%             get(listctrl, 'string'); [
+%             'Function #',
+%             num,
+%             ': (' ,Dots(1,1) , ',' , Dots(2,1) , ') ... (',
+%             Dots(1,n_dots), ',' , Dots(2,n_dots) ,') #' , n_dots
+%             ]]);
+        
     end
     toc;
 end
