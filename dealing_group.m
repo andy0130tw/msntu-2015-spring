@@ -46,6 +46,7 @@ function [ A , G1 , G2 ] = dealing_group( A , rA , S )
                 [ A , G1 ] = group( A , [S(1,1) ; S(2,1)] , [ 0 ; 0 ] , run , dir);
                 
         end
+        disp(A)
             
         switch rA( S(1,2) , S(2,2) )
             case 1
@@ -60,6 +61,7 @@ function [ A , G1 , G2 ] = dealing_group( A , rA , S )
                 dir = 2 ;
                 [ A , G2 ] = group( A , [S(1,2) ; S(2,2)] , [ 0 ; 0 ] , run , dir);
         end
+        disp(A)
     end
 
     if ns ~= 1

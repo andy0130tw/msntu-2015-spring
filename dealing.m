@@ -22,10 +22,6 @@ function [ output_args ] = dealing( A )
 %                       only direction up 
 %   G2          local   the group is successive 1 start with end position and
 %                       only direction down
-%   Ap1         local   the approximation matrix by G1
-%   Ap2         local   the approximation matrix by G2
-%   n_Ap1       local   # Ap1's column
-%   n_Ap2       local   # Ap2's column
 %   X           local   the figure's x-coordinate
 %   Y           local   the figure's y-coordinate
 %   coeff       local   the function's coefficient
@@ -48,8 +44,12 @@ function [ output_args ] = dealing( A )
         
         [ ms , ns ] = size(S);
         
+        if norm(S) ~= 0
+            disp(S)
+        end
         % start to group
         [ A , G1 , G2 ] = dealing_group( A , rA , S );
+        disp(A)
         
         hold on;
         axis equal;
@@ -68,9 +68,6 @@ function [ output_args ] = dealing( A )
             plotfittingBYInterpolation(G2);      
         end
         
-    if norm(S) ~= 0
-        disp(S)
-    end
     disp(G1)
     disp(G2)    
         

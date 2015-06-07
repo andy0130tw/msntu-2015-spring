@@ -89,24 +89,26 @@ function [ A , S , judge_num ] = judge_col( A , i , dot , dir )
                 if A ( j , i ) ~= 0
                     judge_num = 1;
                     S = [ j ; i ];
-                    A = reset_value( A , dir , j , i );              
+                    edge = 1;
+                    A = reset_value( A , dir , j , i , edge);
                     flag = j ;
                     check = j;
                 end
             end
         
             if flag == j + 1 
+                edge = 0;
                 if A ( j , i ) ~= 0
                     if j == 1 
                         S = [ S , [ 1 ; i ] ];
-                        A = reset_value( A , dir , j , i );                      
+                        A = reset_value( A , dir , j , i ,edge );                      
                     else
-                        flag = j ;
-                        A = reset_value( A , dir , j , i );
+                        flag = j;
+                        A = reset_value( A , dir , j , i ,edge );
                     end
                 elseif flag ~= check  
                     S = [ S , [ flag ; i ] ];
-                    A = reset_value( A , dir , flag , i );
+                    A = reset_value( A , dir , flag , i ,edge );
                     break
                 else
                     break
@@ -127,24 +129,26 @@ function [ A , S , judge_num ] = judge_col( A , i , dot , dir )
                 if A ( j , i ) ~= 0
                     judge_num = 1;
                     S = [ j ; i ];
-                    A = reset_value( A , dir , j , i );
+                    edge = 1;
+                    A = reset_value( A , dir , j , i , edge );
                     flag = j ;
                     check = j;
                 end
             end
         
             if flag == j - 1 
+                edge = 0;
                 if A ( j , i ) ~= 0
                     if j == ma 
                         S = [ S , [ j ; i ] ];
-                        A = reset_value( A , dir , j , i );
+                        A = reset_value( A , dir , j , i ,edge );
                         else
                         flag = j ;
-                        A = reset_value( A , dir , j , i );
+                        A = reset_value( A , dir , j , i ,edge );
                     end
                 elseif flag ~= check  
                     S = [ S , [ flag ; i ] ] ;
-                    A = reset_value( A , dir , flag , i );
+                    A = reset_value( A , dir , flag , i ,edge );
                     break
                 else
                     break
