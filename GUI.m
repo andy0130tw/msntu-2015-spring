@@ -22,7 +22,7 @@ function varargout = GUI(varargin)
 
 % Edit the above text to modify the response to help GUI
 
-% Last Modified by GUIDE v2.5 01-Jun-2015 17:27:11
+% Last Modified by GUIDE v2.5 07-Jun-2015 14:59:30
 
 % Begin initialization code - DO NOT EDIT
 
@@ -62,6 +62,10 @@ handles.output = hObject;
 % Update handles structure
 guidata(hObject, handles);
 
+% We love deep recursion
+set(0, 'RecursionLimit', 2000);
+
+
 % UIWAIT makes GUI wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
 
@@ -85,9 +89,17 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 
 global figure_initial
 cla;
-A = readfile(figure_initial);
+[A, ori] = readfile(figure_initial);
 % A = read_colorfile(figure_initial);
-set(gca, 'xtickmode', 'auto', 'ytickmode', 'auto');
+
+global axesctrl
+axesctrl = findobj('tag', 'axes1');
+
+set(axesctrl, 'xtickmode', 'auto', 'ytickmode', 'auto');
+
+image(ori);
+
+[h, w] = size(A);
 
 % hold on;
 % axis equal;
@@ -95,6 +107,14 @@ set(gca, 'xtickmode', 'auto', 'ytickmode', 'auto');
 %     C = seperate_color(A,i-1);
 %     dealing(C);
 % end
+
+axes(axesctrl);
+hold on;
+axis equal, axis([0 w 0 h]);
+
+global timer
+timer = now;
+
 dealing(A);
 
 
@@ -126,9 +146,17 @@ function pushbutton2_Callback(hObject, eventdata, handles)
 
 global figure_initial
 
-str1 = 'jpg';
-str2 = 'eps';
-new_filename = strrep(figure_initial,str1,str2);
+[~,dim] = size(figure_initial);
+
+for i = 1:1:dim
+    if figure_initial(1,i) ~= '.'
+        str1(1,i) = figure_initial(1,i);
+    else
+        break
+    end
+end
+str2 = '.eps';
+new_filename = [str1,str2];
 picture = getframe(handles.axes1);
 figure();
 image(picture.cdata);
@@ -153,11 +181,6 @@ function listbox1_Callback(hObject, eventdata, handles)
 
 % Hints: contents = cellstr(get(hObject,'String')) returns listbox1 contents as cell array
 %        contents{get(hObject,'Value')} returns selected item from listbox1
-
-global X Y
-get(X,Y);
-disp(X);
-disp(Y);
 
 
 % --- Executes during object creation, after setting all properties.

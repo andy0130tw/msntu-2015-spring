@@ -30,8 +30,16 @@ function [ output_args ] = dealing( A )
     flag = 1 ;
     
     tic;
+    
+    global timer
+    textctrl = findobj('tag', 'text4');
+    
     % when A become a zero matrix , program finished
     while norm(A) > 0
+        
+        set(textctrl, 'string', round((now - timer) * 24 * 60 * 60 * 1000) / 1000);
+        drawnow;
+        
         rA = A;
         % start to search non-zero column from flag column
         for i = flag : na ;
@@ -49,6 +57,7 @@ function [ output_args ] = dealing( A )
         end
         % start to group
         [ A , G1 , G2 ] = dealing_group( A , rA , S );
+
         disp(A)
         
         hold on;

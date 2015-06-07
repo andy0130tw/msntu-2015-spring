@@ -1,4 +1,4 @@
-function [ A, imgmap ] = readfile( x )
+function [ A, ori ] = readfile( x )
 %READFILE Summary of this function goes here
 %   Detailed explanation goes here
 
