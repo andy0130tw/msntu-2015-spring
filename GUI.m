@@ -89,7 +89,7 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 
 global figure_initial
 cla;
-[A, map] = readfile(figure_initial);
+[A, ori] = readfile(figure_initial);
 % A = read_colorfile(figure_initial);
 
 global axesctrl
@@ -97,8 +97,7 @@ axesctrl = findobj('tag', 'axes1');
 
 set(axesctrl, 'xtickmode', 'auto', 'ytickmode', 'auto');
 
-image(A);
-colormap(map);
+image(ori);
 
 [h, w] = size(A);
 
