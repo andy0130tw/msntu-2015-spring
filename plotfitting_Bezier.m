@@ -12,7 +12,9 @@ function [  ] = plotfitting_Bezier( G )
        end 
        X(i) = S(1,1);
        Y(i) = S(2,1);
-   end    
-   plot( Y , X ,'color','red');
+   end
+   
+   global axesctrl
+   plot(axesctrl, Y,X,'color','red');
    drawnow;
 end
