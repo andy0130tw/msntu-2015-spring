@@ -27,7 +27,7 @@ function [ output_args ] = dealing( A )
     idx = 1;
     num = 1;
     I = [0];
-    Dots = zeros(2,1);
+    Dots = zeros(2,1)
     
     tic;
     

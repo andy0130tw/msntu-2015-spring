@@ -4,7 +4,7 @@ function [ I , idx , Dots , num ] = dealing_plot( rA , S , G1 , G2 , I , idx , D
     [ ms , ns ] = size(S);
     [ ~ , n_g1 ] = size(G1);
     [ ~ , n_g2 ] = size(G2);
-
+    
     if ns == 1
         if rA( S(1,1) , S(2,1) ) ~= 0.25
             if n_g1 > 2
@@ -20,8 +20,8 @@ function [ I , idx , Dots , num ] = dealing_plot( rA , S , G1 , G2 , I , idx , D
                         'Function #',
                         num,
                         ': (' ,G1(1,1) , ',' , G1(2,1) , ') ... (',
-                        Dots(1,n_g1), ',' , Dots(2,n_g1) ,') #' , n_g1
-                        ]]);
+                        G1(1,n_g1), ',' , G1(2,n_g1) ,') #' , n_g1
+                        ]]);''
                     
                     num = num + 1;
                 else
@@ -36,8 +36,8 @@ function [ I , idx , Dots , num ] = dealing_plot( rA , S , G1 , G2 , I , idx , D
                         'Function #',
                         num,
                         ': (' ,G1(1,1) , ',' , G1(2,1) , ') ... (',
-                        Dots(1,n_g1), ',' , Dots(2,n_g1) ,') #' , n_g1
-                        ]]);
+                        G1(1,n_g1), ',' , G1(2,n_g1) ,') #' , n_g1
+                        ]]);''
                     
                     num = num + 1;
                 end
@@ -58,8 +58,8 @@ function [ I , idx , Dots , num ] = dealing_plot( rA , S , G1 , G2 , I , idx , D
                         'Function #',
                         num,
                         ': (' ,G2(1,1) , ',' , G2(2,1) , ') ... (',
-                        Dots(1,n_g2), ',' , Dots(2,n_g2) ,') #' , n_g2
-                        ]]);
+                        G2(1,n_g2), ',' , G2(2,n_g2) ,') #' , n_g2
+                        ]]);''
                     
                     num = num + 1;
                 else
@@ -74,8 +74,8 @@ function [ I , idx , Dots , num ] = dealing_plot( rA , S , G1 , G2 , I , idx , D
                         'Function #',
                         num,
                         ': (' ,G2(1,1) , ',' , G2(2,1) , ') ... (',
-                        Dots(1,n_g2), ',' , Dots(2,n_g2) ,') #' , n_g2
-                        ]]);
+                        G2(1,n_g2), ',' , G2(2,n_g2) ,') #' , n_g2
+                        ]]);''
                     
                     num = num + 1;
                 end
@@ -95,8 +95,8 @@ function [ I , idx , Dots , num ] = dealing_plot( rA , S , G1 , G2 , I , idx , D
                     'Function #',
                     num,
                     ': (' ,G1(1,1) , ',' , G1(2,1) , ') ... (',
-                    Dots(1,n_g1), ',' , Dots(2,n_g1) ,') #' , n_g1
-                    ]]);
+                    G1(1,n_g1), ',' , G1(2,n_g1) ,') #' , n_g1
+                    ]]);' '
                 
                 num = num + 1;
             else
@@ -110,8 +110,8 @@ function [ I , idx , Dots , num ] = dealing_plot( rA , S , G1 , G2 , I , idx , D
                     'Function #',
                     num,
                     ': (' ,G1(1,1) , ',' , G1(2,1) , ') ... (',
-                    Dots(1,n_g1), ',' , Dots(2,n_g1) ,') #' , n_g1
-                    ]]);
+                    G1(1,n_g1), ',' , G1(2,n_g1) ,') #' , n_g1
+                    ]]); ''
                 
                 idx = idx + n_g1;
                 num = num + 1;
@@ -119,7 +119,7 @@ function [ I , idx , Dots , num ] = dealing_plot( rA , S , G1 , G2 , I , idx , D
         end
             
         if n_g2 > 2
-            if nuum == 1
+            if num == 1
                 Dots = G2;
                 I = [idx];
                 plotfitting_Bezier(G2);
@@ -131,8 +131,8 @@ function [ I , idx , Dots , num ] = dealing_plot( rA , S , G1 , G2 , I , idx , D
                     'Function #',
                     num,
                     ': (' ,G2(1,1) , ',' , G2(2,1) , ') ... (',
-                    Dots(1,n_g2), ',' , Dots(2,n_g2) ,') #' , n_g2
-                    ]]);
+                    G2(1,n_g2), ',' , G2(2,n_g2) ,') #' , n_g2
+                    ]]);''
                 
                 num = num + 1;
             else
@@ -147,8 +147,8 @@ function [ I , idx , Dots , num ] = dealing_plot( rA , S , G1 , G2 , I , idx , D
                     'Function #',
                     num,
                     ': (' ,G2(1,1) , ',' , G2(2,1) , ') ... (',
-                    Dots(1,n_g2), ',' , Dots(2,n_g2) ,') #' , n_g2
-                    ]]);
+                    G2(1,n_g2), ',' , G2(2,n_g2) ,') #' , n_g2
+                    ]]);''
                 
                 num = num + 1;
             end
