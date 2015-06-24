@@ -22,9 +22,10 @@ function varargout = GUI(varargin)
 
 % Edit the above text to modify the response to help GUI
 
-% Last Modified by GUIDE v2.5 07-Jun-2015 17:49:32
+% Last Modified by GUIDE v2.5 15-Jun-2015 15:24:39
 
 % Begin initialization code - DO NOT EDIT
+
 
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
@@ -122,7 +123,9 @@ drawnow;
 global timer
 timer = now;
 
-dealing(A);
+global I Dots
+[ I , Dots ] = dealing(A);
+
 
 
 function edit1_Callback(hObject, eventdata, handles)
@@ -163,30 +166,32 @@ for i = 1:1:dim
         break
     end
 end
-str2 = '.eps';
+str2 = '.pdf';
 new_filename = [str1,str2];
 
 % hide overlay
 set(overlay, 'visible', 'off');
 
-set(axesctrl, 'xtick', [], 'ytick', [], 'xcolor', [1 1 1], 'ycolor', [1 1 1]);
+%set(axesctrl, 'xtick', [], 'ytick', [], 'xcolor', [1 1 1], 'ycolor', [1 1 1]);
 
-picture = getframe(axesctrl);
-figure();
+axh = gca;
 
-cdd = picture.cdata;
-[h, w] = size(cdd);
+%image([0 w], [0 h], cdd);
+%axis([0 w 0 h]);
+set(0,'DefaultFigureVisible','off')
+newaxh = figure;
+set(0,'DefaultFigureVisible','on')
 
-image([0 w], [0 h], cdd);
-axis([0 w 0 h]);
+copyobj(axh,newaxh);
+axis off
 
-saveas(gcf, new_filename, 'eps2c');
+saveas(newaxh, new_filename, 'pdf');
 
 % show overlay
 set(overlay, 'visible', 'on');
-set(axesctrl, 'xtickmode', 'auto', 'ytickmode', 'auto');
+%set(axesctrl, 'xtickmode', 'auto', 'ytickmode', 'auto');
 
-close(gcf);
+close(newaxh);
 
 
 % --- Executes during object creation, after setting all properties.
@@ -198,6 +203,9 @@ function axes1_CreateFcn(hObject, eventdata, handles)
 % Hint: place code in OpeningFcn to populate axes1
 set(gca, 'xtick', [], 'ytick', []);
 
+global check
+check = 0
+
 % --- Executes on selection change in listbox1.
 function listbox1_Callback(hObject, eventdata, handles)
 % hObject    handle to listbox1 (see GCBO)
@@ -206,6 +214,42 @@ function listbox1_Callback(hObject, eventdata, handles)
 
 % Hints: contents = cellstr(get(hObject,'String')) returns listbox1 contents as cell array
 %        contents{get(hObject,'Value')} returns selected item from listbox1
+
+num = get(handles.listbox1,'Value');
+
+global I Dots check
+
+[ ~ , ni ] = size(I);
+if check == 0 
+    if num ~= ni
+        G = Dots ( 1 : 2 , I( num ) : I( num + 1) -1 );
+    else
+        G = Dots ( 1 : 2 , I( num ) : I( ni ) );
+    end
+    plotfitting_Bezier( G , 2 );  
+    display_function( G );
+    check = num;
+elseif check ~= num
+    if check ~= ni
+        G = Dots ( 1 : 2 , I( check ) : I( check + 1) -1 );
+    else
+        G = Dots ( 1 : 2 , I( check ) : I( ni ) );
+    end
+    plotfitting_Bezier( G , 1 );  
+    
+    if num ~= ni
+        G = Dots ( 1 : 2 , I( num ) : I( num + 1) -1 );
+    else
+        G = Dots ( 1 : 2 , I( num ) : I( ni ) );
+    end
+    plotfitting_Bezier( G , 2 );  
+    display_function( G );
+    check = num;
+end
+    
+
+
+
 
 
 % --- Executes during object creation, after setting all properties.

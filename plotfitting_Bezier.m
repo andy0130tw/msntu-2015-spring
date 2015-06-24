@@ -1,4 +1,4 @@
-function [  ] = plotfitting_Bezier( G )
+function [  ] = plotfitting_Bezier( G , color )
 %   PLOTFITTINGBYINTERPOLATION Summary of this function goes here
 %   Detailed explanation goes here
    [ ~ , n ] = size(G);
@@ -15,6 +15,11 @@ function [  ] = plotfitting_Bezier( G )
    end
    
    global axesctrl
-   plot(axesctrl, Y,X,'color','red');
+   if color == 1
+       plot(axesctrl, Y,X,'color','red');
+   else
+       plot(axesctrl, Y,X,'color','blue');
+   end
    drawnow;
+%    plot( Y , X , 'color' , 'red' );
 end

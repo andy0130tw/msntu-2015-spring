@@ -37,9 +37,10 @@ function [ A , S , judge_num ] = judge_col( A , i , dot , dir )
     % type one
     % find successive non-zero entries from the begining
     % reset the entry into zero when we search it the first time
-    if dot(1,1) == -1 & dot(2,1) ==-1 & dir == 0
+    if dir == 0
         flag = 0 ;
-        for j = 1 : ma ;
+        i = dot(2,1);
+        for j = dot(1,1) : ma ;
             if flag == 0 
                 if A ( j , i ) ~= 0
                     judge_num = 1;

@@ -1,4 +1,4 @@
-function [ output_args ] = dealing( A )
+function [ I , Dots ] = dealing( A )
 %   MAIN Summary of this function goes here
 %   Detailed explanation goes here
 %   A           inputs  picture matrix
@@ -27,7 +27,8 @@ function [ output_args ] = dealing( A )
     idx = 1;
     num = 1;
     I = [0];
-    Dots = zeros(2,1)
+    Dots = zeros(2,1);
+    J = [ 1 ; 1 ];
     
     tic;
     
@@ -43,10 +44,13 @@ function [ output_args ] = dealing( A )
         rA = A;
         % start to search non-zero column from flag column
         for i = flag : na ;
-            [ A , S , judge_num ] = judge_col ( A , i , [-1 ; -1] , 0);
+            [ A , S , judge_num ] = judge_col ( A , i , J , 0);
             if  judge_num == 1
                 flag = i ;
+                J = S( : , 1 );
                 break ;
+            else
+                J = [ 1 ; i + 1 ];
             end
         end
 
@@ -58,16 +62,6 @@ function [ output_args ] = dealing( A )
         
         % plot G1's and G2's figure
         [ I , idx , Dots , num ] = dealing_plot( rA , S , G1 , G2 , I , idx , Dots , num );
-        
-%         listctrl = findobj('tag', 'listbox1');
-%         set(listctrl, 'string', [
-%             get(listctrl, 'string'); [
-%             'Function #',
-%             num,
-%             ': (' ,Dots(1,1) , ',' , Dots(2,1) , ') ... (',
-%             Dots(1,n_dots), ',' , Dots(2,n_dots) ,') #' , n_dots
-%             ]]);
-        
     end
     toc;
 end
